@@ -13,7 +13,7 @@ Project of automated tests for the Google Books API for Search and Find Volume e
 
 * [**Mindmap**](https://github.com/RomainSeite/Project-Google-Books/blob/main/images/MindmapGoogleBookAPI.png) [`MindmapGoogleBookAPI.mm`](https://github.com/RomainSeite/Project-Google-Books/blob/main/MindmapGoogleBookAPI.mm) : Mindmap using FreePlane
 
-* [**Report**](https://github.com/RomainSeite/Project-Google-Books/blob/main/images/ReportSummaryGoogleBookAPI.png) [`ReportGoogleBookAPI.html`] : HTMLExtra Report
+* [**Report**](https://github.com/RomainSeite/Project-Google-Books/blob/main/images/ReportSummaryGoogleBookAPI.png) [`ReportGoogleBookAPI.html`](https://github.com/RomainSeite/Project-Google-Books/blob/main/ReportGoogleBookAPI.html) : HTMLExtra Report
 
 * **Data Set** [`DatasetGoogleBookAPI.json`](https://github.com/RomainSeite/Project-Google-Books/blob/main/DatasetGoogleBookAPI.json) : Data Set for the collection
 
