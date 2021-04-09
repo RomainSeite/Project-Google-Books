@@ -4,10 +4,14 @@ Project of automated tests for the Google Books API for Search and Find Volume e
 ![report](reporthtmlextraGoogleBookAPI.png?raw=true)
 ![mindmap](mindmapGoogleBookAPI.png?raw=true)
 
-Collection : `https://www.getpostman.com/collections/0d3c964ab41c5237f0bc`
+Collection : `https://www.getpostman.com/collections/970afb2833ffd5de12b0`
 
-`Mindmap Google Book API.mm` : Mindmap using FreePlane
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-`Google Book API report.html`: htmlextra report
+`CollectionGoogleBookAPI.json` : collection
 
-`Dataset Google Book API.json` : dataset for the collection
+`MindmapGoogleBookAPI.mm` : Mindmap using FreePlane
+
+`ReportGoogleBookAPI.html`: htmlextra report
+
+`DatasetGoogleBookAPI.json` : dataset for the collection
