@@ -1,0 +1,104 @@
+[{
+    "iteration" : "1",
+    "status" : "200",
+    "q" : "skiing",
+    "queryWithParameters" : "+inauthor:\"Ron Hubbard\"+inpublisher:\"Galaxy Press\"+subject:Fiction+isbn:9781592122615",
+    "maxResults" : "1",
+    "printType" : "all",
+    "expectedPrintType" : "MAGAZINE",
+    "projection" : "full",
+    "langRestrict" : "en",
+    "filter" : "full",
+    "download" : "epub",
+    "orderBy" : "relevance",
+    "startIndex" : "0",
+    "indexDelta" : "3",
+    "volumeId" : "V714NghIxwoC",
+    "word1" : "Marsupilami",
+    "word2" : "tome",
+    "word3" : "piste",
+    "symbolBetweenWords1" : "+",
+    "symbolBetweenWords2" : "+",
+    "inauthor" : "L. Ron Hubbard",
+    "inpublisher" : "Galaxy Press  LLC",
+    "subject" : "Fiction",
+    "isbn" : "9781592122615"
+},{
+    "status" : "200",
+    "q" : "Emmanuel Macron",
+    "queryWithParameters" : "+inauthor:\"Ron Hubbard\"+oclc:566782346",
+    "maxResults" : "40",
+    "printType" : "books",
+    "expectedPrintType" : "BOOK",
+    "projection" : "lite",
+    "langRestrict" : "de",
+    "filter" : "partial",
+    "orderBy" : "newest",
+    "volumeId" : "2s5LxQEACAAJ",
+    "word1" : "Marsupilami",
+    "word2" : "tome",
+    "word3" : "piste",
+    "symbolBetweenWords1" : "_",
+    "symbolBetweenWords2" : "_",
+    "inauthor" : "La Fayette Ron Hubbard",
+    "oclc" : "566782346"
+},{
+    "status" : "200",
+    "q" : "skiing",
+    "maxResults" : "0",
+    "printType" : "magazines",
+    "expectedPrintType" : "MAGAZINE",
+    "filter" : "ebooks",
+    "word1" : "Marsupilami",
+    "word2" : "tome",
+    "word3" : "piste",
+    "symbolBetweenWords1" : "%20",
+    "symbolBetweenWords2" : "%20"
+},{
+    "iteration" : "4",
+    "status" : "200",
+    "q" : "Emmanuel Macron",
+    "filter" : "free-ebooks",
+    "word1" : "Marsupilami",
+    "word2" : "tome",
+    "word3" : "d",
+    "symbolBetweenWords1" : "-",
+    "symbolBetweenWords2" : "-"
+},{
+    "status" : "200",
+    "q" : "Emmanuel Macron",
+    "filter" : "paid-ebooks"
+},{
+    "status" : "200",
+    "q" : "\"tresors de france\"+banane+fraise+haricot",
+    "maxResults" : "40",
+    "maxResultsDiff" : "36"
+},{
+    "iteration" : "7",
+    "status" : "400",
+    "q" : "Emmanuel Macron",
+    "maxResults" : "-1",
+    "printType" : "word",
+    "projection" : "word",
+    "langRestrict" : "zz",
+    "download" : "word",
+    "orderBy" : "word",
+    "startIndex" : "word",
+    "indexDelta" : "3"
+},{
+    "status" : "400",
+    "q" : "Emmanuel Macron",
+    "maxResults" : "41"
+},{
+    "status" : "400",
+    "q" : "Emmanuel Macron",
+    "maxResults" : "word"
+},{
+    "status" : "404",
+    "volumeId" : "V714NghIxwo"
+},{
+    "iteration" : "11",
+    "status" : "503",
+    "volumeId" : "V714NghIxwos"
+}
+]
