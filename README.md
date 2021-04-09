@@ -15,6 +15,8 @@ Collection : `https://www.getpostman.com/collections/970afb2833ffd5de12b0`
 
 `DatasetGoogleBookAPI.json` : dataset for the collection
 
+`images` : hosts the images for this repo, one of the mindmap and 2 of the report, they are on this page
+
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ![report](images/ReportSummaryGoogleBookAPI.png?raw=true)
