@@ -900,7 +900,7 @@
 				"exec": [
 					"let status=data.status;",
 					"",
-					"pm.test(\"Status code is \" + status , function () {",
+					"pm.test(`Status code is ${pm.response.code}, expected to be ${status}`, function () {",
 					"    pm.expect(pm.response.code).to.be.eql(parseInt(status));",
 					"});"
 				]
