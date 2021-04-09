@@ -19,4 +19,4 @@ Collection : `https://www.getpostman.com/collections/970afb2833ffd5de12b0`
 
 ![report](images/ReportSummaryGoogleBookAPI.png?raw=true)
 
-![report](images/ReportFailsaGoogleBookAPI.png?raw=true)
+![report](images/ReportFailsGoogleBookAPI.png?raw=true)
