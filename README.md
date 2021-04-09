@@ -22,7 +22,11 @@ Project of automated tests for the Google Books API for Search and Find Volume e
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+*** Report Summary
+
 ![report](images/ReportSummaryGoogleBookAPI.png?raw=true)
+
+*** Report Fails
 
 ![report](images/ReportFailsGoogleBookAPI.png?raw=true)
 
