@@ -2,15 +2,14 @@
 
 Project of automated tests for the Google Books API for Search and Find Volume endpoints
 
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 ![mindmap](images/MindmapGoogleBookAPI.png?raw=true)
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 ## Index
 
-* [Collection](https://github.com/RomainSeite/Project-Google-Books/blob/main/CollectionGoogleBookAPI.json) : `https://www.getpostman.com/collections/970afb2833ffd5de12b0`
-
-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-`CollectionGoogleBookAPI.json` : collection
+* [Collection](https://github.com/RomainSeite/Project-Google-Books/blob/main/CollectionGoogleBookAPI.json) : public link:`https://www.getpostman.com/collections/970afb2833ffd5de12b0`
+ Export: [CollectionGoogleBookAPI.json](https://github.com/RomainSeite/Project-Google-Books/blob/main/CollectionGoogleBookAPI.json)
 
 `MindmapGoogleBookAPI.mm` : Mindmap using FreePlane
 
@@ -25,3 +24,5 @@ Project of automated tests for the Google Books API for Search and Find Volume e
 ![report](images/ReportSummaryGoogleBookAPI.png?raw=true)
 
 ![report](images/ReportFailsGoogleBookAPI.png?raw=true)
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
