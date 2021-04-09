@@ -1,0 +1,916 @@
+{
+	"info": {
+		"_postman_id": "982f468a-05d7-449a-b5e4-7d4f92f468ef",
+		"name": "Google Book API",
+		"description": "# Google Book API Project\n\n## Author : Romain SEITE\n\n### GOOGLE BOOK API TEST documentation\n\n**This Collection hosts automated tests** \n\n### COLLECTION SETTINGS\n\n| Setting name | Setting value |\n|:-|:-|\n| Auth | *API Key* |  \n\n#### Variables\n| Name | Value | Scope | Purpose |\n|:-|:-|:-|:-|\n| url |```https://www.googleapis.com/books/v1/``` | COLLECTION | API endpoint |\n\n#### Tests\n\nThe same logic is used for each test : if the request is correct, it works with status 200, if the request is not correct, an error 400 is returned.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GET Volume(s)",
+			"item": [
+				{
+					"name": "Performing a Search",
+					"item": [
+						{
+							"name": "maxResults",
+							"item": [
+								{
+									"name": "maxResults Parameter",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let q = pm.iterationData.get(\"q\");",
+													"let maxResults = parseInt(pm.iterationData.get(\"maxResults\"));",
+													"let maxResultsDiff = pm.iterationData.get(\"maxResultsDiff\");",
+													"",
+													"if (maxResults != undefined)",
+													"    pm.test(`maxResults = ${maxResults} Test With q=${q}`, function () {",
+													"        if (maxResults <= 40 && maxResults > 0)",
+													"            maxResultsDiff == undefined",
+													"                ? pm.expect(pm.response.json().items.length).to.equal(maxResults)",
+													"                : pm.expect(pm.response.json().items.length).to.be.below(maxResults);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes?maxResults={{maxResults}}&q={{q}}",
+											"host": [
+												"{{url}}volumes"
+											],
+											"query": [
+												{
+													"key": "maxResults",
+													"value": "{{maxResults}}",
+													"description": "The maximum number of elements to return with this request."
+												},
+												{
+													"key": "q",
+													"value": "{{q}}",
+													"description": "Full-text query string."
+												}
+											]
+										},
+										"description": "### CORRECT maxResults CASE\n\n**Given**: a query and a correct maxResults\n\n**When**: sending url\n\n**Then**: I should receive up to maxResults results\n\n- - - - - - - - - - - - - - - - - -  -\n\n### INCORRECT maxResults CASE\n\n**Given**: a query and an incorrect maxResults\n\n**When**: sending url\n\n**Then**: I should receive a status 400"
+									},
+									"response": []
+								}
+							],
+							"description": "### maxResults\n\n**The maximum number of elements to return with this request.**\n\nFor any request for all items in a collection, you can paginate results by specifying **startIndex** and **maxResults** in the parameters for the request.\n\nDefault: **maxResults=10**\n\nMaximum allowable value: **maxResults=40**"
+						},
+						{
+							"name": "printType",
+							"item": [
+								{
+									"name": "printType Parameter",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let q = pm.iterationData.get(\"q\");",
+													"let printType = pm.iterationData.get(\"printType\");",
+													"let expectedPrintType = pm.iterationData.get(\"expectedPrintType\");",
+													"",
+													"if (!([undefined, 'word'].includes(printType)))",
+													"    pm.test(`printType = ${printType} Test With q=${q}`, function () {",
+													"        pm.expect(pm.response.json().items[0].volumeInfo.printType).to.equal(expectedPrintType);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes?q={{q}}&printType={{printType}}",
+											"host": [
+												"{{url}}volumes"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "{{q}}",
+													"description": "Full-text query string."
+												},
+												{
+													"key": "printType",
+													"value": "{{printType}}",
+													"description": "Restrict to books or magazines."
+												}
+											]
+										},
+										"description": "### CORRECT PRINTTYPE CASE\n\n**Given**: a query returning a book and a correct printType\n\n**Given**: a query returning a magazine and a correct printType\n\n**When**: sending the 2 requests\n\n**Then**: depending on the printType I should be returned books, magazines or books and magazines\n\n- - - - - - - - - - - - -  - - -\n\n### INCORRECT PRINTTYPE CASE\n\n**Given**: a query returning a book and an incorrect printType\n\n**Given**: a query returning a magazine and an incorrect printType\n\n**When**: sending the 2 requests\n\n**Then**: I should be returned a status 400"
+									},
+									"response": []
+								}
+							],
+							"description": "### printType\n\n**Restrict to books or magazines.**\n\t\nSupported values are:\n\n**printType=all** - Return all volume content types (no restriction). This is the default.\n\n**printType=books** - Return just books.\n\n**printType=magazines** - Return just magazines."
+						},
+						{
+							"name": "projection",
+							"item": [
+								{
+									"name": "projection Parameter",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let q = pm.iterationData.get(\"q\");",
+													"let projection = pm.iterationData.get(\"projection\");",
+													"",
+													"if (projection != undefined)",
+													"    pm.test(`projection = ${projection} Test With q=${q}`, function () {",
+													"        if (['full', 'lite'].includes(projection))",
+													"            pm.expect(typeof pm.response.json().items[0].volumeInfo.pageCount).",
+													"            to.equal(projection == 'full'? \"number\" : \"undefined\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes?q={{q}}&projection={{projection}}",
+											"host": [
+												"{{url}}volumes"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "{{q}}",
+													"description": "Full-text query string."
+												},
+												{
+													"key": "projection",
+													"value": "{{projection}}",
+													"description": "Restrict volume information returned to a subset of fields."
+												}
+											]
+										},
+										"description": "### CORRECT projection CASE\n\n**Given**: a query and a correct projection\n\n**When**: sending url\n\n**Then**: I should receive all or lite volume metadata\n\n- - - - - - - - - - - - - - - - - -  -\n\n### INCORRECT projection CASE\n\n**Given**: a query and an incorrect projection\n\n**When**: sending url\n\n**Then**: I should receive a status 400"
+									},
+									"response": []
+								}
+							],
+							"description": "# Projection\n\n**Restrict volume information returned to a subset of fields.**\n\nSupported projections are:\n\n**projection=full** - Includes all volume metadata (default).\n\n**projection=lite** - Includes only a subject of volume and access metadata."
+						},
+						{
+							"name": "langRestrict",
+							"item": [
+								{
+									"name": "langRestrict Parameter",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let q = pm.iterationData.get(\"q\");",
+													"let langRestrict = pm.iterationData.get(\"langRestrict\");",
+													"",
+													"if (langRestrict != undefined)",
+													"    pm.test(`langRestrict = ${langRestrict} Test With q=${q}`, function () {",
+													"        pm.expect(pm.response.json().items[0].volumeInfo.language).to.equal(langRestrict);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes?q={{q}}&langRestrict={{langRestrict}}",
+											"host": [
+												"{{url}}volumes"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "{{q}}",
+													"description": "Full-text query string."
+												},
+												{
+													"key": "langRestrict",
+													"value": "{{langRestrict}}",
+													"description": "Restricts the volumes returned to those that are tagged with the specified language."
+												}
+											]
+										},
+										"description": "### CORRECT langRestrict CASE\n\n**Given**: a query and a known 2-letters langRestrict\n\n**When**: sending url\n\n**Then**: I should receive only results in that language\n\n- - - - - - - - - - - - - - - - - -  -\n\n### INCORRECT projection CASE\n\n**Given**: a query and an incorrect langRestrict\n\n**When**: sending url\n\n**Then**: I should receive a status 400"
+									},
+									"response": []
+								}
+							],
+							"description": "### langRestric\n\n**Restricts the volumes returned to those that are tagged with the specified language.**\n\nRestrict the search results to those with a certain language by specifying **langRestrict** to a two-letter ISO-639-1 code, such as \"**en**\" or \"**fr**\"."
+						},
+						{
+							"name": "filter",
+							"item": [
+								{
+									"name": "filter Parameter",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let q = pm.iterationData.get(\"q\");",
+													"let filter = pm.iterationData.get(\"filter\");",
+													"",
+													"if (filter != undefined) {",
+													"    let firstItem = pm.response.json().items[0];",
+													"    pm.test(`filter = ${filter} Test With q=${q}`, function () {",
+													"        ['full', 'partial'].includes(filter)",
+													"            ? pm.expect(firstItem.accessInfo.viewability).",
+													"                to.equal(filter == \"full\" ? \"ALL_PAGES\" : \"PARTIAL\")",
+													"            : pm.expect(firstItem.saleInfo.isEbook).to.eq(true),",
+													"                ['free-ebooks', 'paid-ebooks'].includes(filter) ?",
+													"                    pm.expect(firstItem.saleInfo.saleability).",
+													"                        to.eq(filter == \"free-ebooks\" ? \"FREE\" : \"FOR_SALE\") : '';",
+													"});};"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes?q={{q}}&filter={{filter}}",
+											"host": [
+												"{{url}}volumes"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "{{q}}",
+													"description": "Full-text query string."
+												},
+												{
+													"key": "filter",
+													"value": "{{filter}}",
+													"description": "Filter search results by volume type and availability."
+												}
+											]
+										},
+										"description": "### CORRECT filter CASE\n\n**Given**: a query and a correct filter\n\n**When**: sending url\n\n**Then**: The results should be filtered\n\n- - - - - - - - - - - - - - - - - -  -\n\n### INCORRECT filter CASE\n\n**Given**: a query and an incorrect filter\n\n**When**: sending url\n\n**Then**: I should receive a status 400"
+									},
+									"response": []
+								}
+							],
+							"description": "### filter\n\n**Filter search results by volume type and availability.**\n\nSupported filters are:\n\n**filter=partial** - Restrict results to volumes where at least part of the text are previewable.\n\n**filter=full** - Restrict results to volumes where all of the text is viewable.\n\n**filter=free-ebooks** - Restrict results to free Google eBooks.\n\n**filter=paid-ebooks** - Restrict results to Google eBooks with a price for purchase.\n\n**filter=ebooks** - Restrict results to Google eBooks, paid or free.Examples of non-eBooks would be publisher content that is available in limited preview and not for sale, or magazines."
+						},
+						{
+							"name": "download",
+							"item": [
+								{
+									"name": "download Parameter",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let q = pm.iterationData.get(\"q\");",
+													"let download = pm.iterationData.get(\"download\");",
+													"",
+													"if (!([undefined, \"word\"]).includes(download)) {",
+													"    let firstItem = pm.response.json().items[0];",
+													"    pm.test(`download = ${download} Test With q=${q}`, function () {",
+													"        if (download != \"word\")",
+													"            pm.expect(firstItem.accessInfo.epub.isAvailable).to.equal(false);",
+													"});};"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes?q={{q}}&download={{download}}",
+											"host": [
+												"{{url}}volumes"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "{{q}}",
+													"description": "Full-text query string."
+												},
+												{
+													"key": "download",
+													"value": "{{download}}",
+													"description": "Restrict to volumes by download availability."
+												}
+											]
+										},
+										"description": "### CORRECT download CASE\n\n**Given**: a query and download = epub\n\n**When**: sending url\n\n**Then**: I should be returned only downloadable results\n\n- - - - - - - - - - - - - - - - - -  -\n\n### INCORRECT download CASE\n\n**Given**: a query and an incorrect download\n\n**When**: sending url\n\n**Then**: I should receive a status 400"
+									},
+									"response": []
+								}
+							],
+							"description": "### download\n\n**Restrict to volumes by download availability.**\n\nCurrently, the only supported value is **epub**.\nPurchase may be required for download access."
+						},
+						{
+							"name": "query q",
+							"item": [
+								{
+									"name": "q +%20-_\" Parameter",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let word1 = pm.iterationData.get(\"word1\");",
+													"",
+													"if (!([undefined]).includes(word1)) {",
+													"    let word2 = pm.iterationData.get(\"word2\");",
+													"    let word3 = pm.iterationData.get(\"word3\");",
+													"    let symbolBetweenWords1 = pm.iterationData.get(\"symbolBetweenWords1\");",
+													"    let symbolBetweenWords2 = pm.iterationData.get(\"symbolBetweenWords2\");",
+													"    if (pm.response.json().items == undefined)",
+													"        pm.test(`q=${word1}${symbolBetweenWords1}${word2}${symbolBetweenWords2}\"${word3}\" does not return any return ???`, function () { pm.expect(1).to.equal(0);});",
+													"    else {",
+													"    let firstItemTitle = pm.response.json().items[0].volumeInfo.title.split(' ');",
+													"    pm.test(`Symbol ${symbolBetweenWords1} With Query Term : ${word2}`, ",
+													"        function () {",
+													"            symbolBetweenWords1 == \"-\"",
+													"            ? pm.expect(firstItemTitle).not.to.include(word2)",
+													"            : pm.expect(firstItemTitle).to.include(word2);",
+													"        });",
+													"    pm.test(`Symbol ${symbolBetweenWords2} With Query Term : \"${word3}\"`, ",
+													"        function () {",
+													"            symbolBetweenWords2 == \"-\"",
+													"            ? pm.expect(firstItemTitle).not.to.include(word3)",
+													"            : pm.expect(firstItemTitle).to.include(word3);",
+													"        });",
+													"",
+													"};",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"    let word1 = pm.iterationData.get(\"word1\");",
+													"    let word2 = pm.iterationData.get(\"word2\");",
+													"    let word3 = pm.iterationData.get(\"word3\");",
+													"    let symbolBetweenWords1 = pm.iterationData.get(\"symbolBetweenWords1\");",
+													"    let symbolBetweenWords2 = pm.iterationData.get(\"symbolBetweenWords2\");"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes?q={{word1}}{{symbolBetweenWords1}}{{word2}}{{symbolBetweenWords2}}\"{{word3}}\"",
+											"host": [
+												"{{url}}volumes"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "{{word1}}{{symbolBetweenWords1}}{{word2}}{{symbolBetweenWords2}}\"{{word3}}\"",
+													"description": "Full-text query string."
+												}
+											]
+										},
+										"description": "### QUERY\n\n**Given**: a query using quotation marks \"\", +, _ , -, url encoded space %20, lower and upper cases characters alike\n\n**When**: sending url\n\n**Then**: + %20 \"\" and _ should restrict the search to results with all the words\n\n**But**: - should restrict the search to results without the word\n\n**But**: the search should be case insensitive"
+									},
+									"response": []
+								},
+								{
+									"name": "q With Parameters",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let query = pm.iterationData.get(\"queryWithParameters\");",
+													"if (query != undefined) {",
+													"    let inauthor = pm.iterationData.get(\"inauthor\");",
+													"    let volume = pm.response.json().items[0];",
+													"    tests[\"inauthor field restricts to volumes of this author\"] =",
+													"        pm.expect(volume.volumeInfo.authors).to.include(inauthor);",
+													"    let oclc = pm.iterationData.get(\"oclc\");",
+													"    if (oclc != undefined) {",
+													"        let inpublisher = pm.iterationData.get(\"inpublisher\");",
+													"        let subject = pm.iterationData.get(\"subject\");",
+													"        let isbn = pm.iterationData.get(\"isbn\");",
+													"        tests[\"inpublisher field restricts to volumes of this publisher\"] =",
+													"            pm.expect(volume.volumeInfo.inpublisher).to.equal(inpublisher);",
+													"        tests[\"subject field restricts to volumes of this subject\"] =",
+													"            pm.expect(volume.volumeInfo.subject).to.equal(subject);",
+													"        tests[\"isbn field only shows the result with this isbn\"] =",
+													"            pm.expect(volume.volumeInfo.isbn).to.equal(isbn);",
+													"    }",
+													"    else ",
+													"        tests[\"oclc field only shows the result with this oclc\"] =",
+													"            pm.expect(volume.volumeInfo.oclc).to.equal(oclc);",
+													"};"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes?q={{queryWithParameters}}",
+											"host": [
+												"{{url}}volumes"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "{{queryWithParameters}}",
+													"description": "Full-text query string."
+												}
+											]
+										},
+										"description": "### QUERY WITH PARAMETERS\n\n**Given**: a query using query parameters inauthor inpublisher subject isbn and oclc (I'm not testing lccn as of now)\n\n**When**: sending url\n\n**Then**: the parameters should restrict the search to results according to the parameters and their value"
+									},
+									"response": []
+								},
+								{
+									"name": "No q & Two q Parameter(s)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let url = pm.collectionVariables.get(\"url\");",
+													"",
+													"if (pm.iterationData.get(\"status\") == 400) {",
+													"    tests['Without q param an error is returned'] = ",
+													"        pm.sendRequest(url+'volumes', (error, response) => {",
+													"            pm.expect(response).to.have.status(400);",
+													"        });",
+													"    tests['With two q param an error is returned'] = ",
+													"        pm.sendRequest(`${url}volumes?q=\"banane\"&q=\"poire\"`, (error, response) => {",
+													"            pm.expect(response).to.have.status(400);",
+													"        });",
+													"};"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes?q=\"banane\"",
+											"host": [
+												"{{url}}volumes"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "\"banane\""
+												}
+											]
+										},
+										"description": "### NO QUERY CASE\n\n**Given**: a request without q parameter\n\n**When**: sending url\n\n**Then**: an error should be returned\n\n### TWO QUERIES CASE\n\n**Given**: a request with 2 q parameters\n\n**When**: sending url\n\n**Then**: an error should be returned"
+									},
+									"response": []
+								}
+							],
+							"description": "# Q\n\n### Full-text query string.\t\n\nWhen creating a query, list search terms separated by a **'+'**, in the form **q=term1+term2_term3**. \n\n(Alternatively, you can separate them with a space, but as with all of the query parameter values, the spaces must then be URL encoded.)\n\nThe API returns all entries that match all of the search terms (like using AND between terms).\n\nLike Google's web search, the API searches on complete words (and related words with the same stem), not substrings.\n\nTo search for an exact phrase, enclose the phrase in quotation marks: **q=\"exact phrase\"**\n.\nTo exclude entries that match a given term, use the form **q=-term**.\n\nThe search terms are *case-insensitive*.\n\n**Example**: to search for all entries that contain the exact phrase \"Elizabeth Bennet\" and the word \"Darcy\" but don't contain the word \"Austen\", use the following query parameter value:\n**q=\"Elizabeth+Bennet\"+Darcy-Austen**\n\nThere are special (case-sensitive) keywords you can specify in the search terms to search in particular fields, such as:\n\n**intitle**: Returns results where the text following this keyword is found in the title.\n\n**inauthor**: Returns results where the text following this keyword is found in the author.\n\n**inpublisher**: Returns results where the text following this keyword is found in the publisher.\n\n**subject**: Returns results where the text following this keyword is listed in the category list of the volume.\n\n**isbn**: Returns results where the text following this keyword is the ISBN number.\n\n**lccn**: Returns results where the text following this keyword is the Library of Congress Control Number.\n\n**oclc**: Returns results where the text following this keyword is the Online Computer Library Center number."
+						},
+						{
+							"name": "orderBy",
+							"item": [
+								{
+									"name": "orderBy Parameter",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let q = pm.iterationData.get(\"q\");",
+													"let orderBy = pm.iterationData.get(\"orderBy\");",
+													"",
+													"const isOrderedByNewest = (date1, date2) => {",
+													"    date1 = date1.split('-');",
+													"    date1 = 100 * parseInt(date1[0]) + parseInt(date1[1]);",
+													"    date2 = date2.split('-');",
+													"    date2 = 100 * parseInt(date2[0]) + parseInt(date2[1]);",
+													"    return date1 >= date2;",
+													"};",
+													"",
+													"if (!([undefined, 'word'].includes(orderBy))) {",
+													"    let firstItemDate = pm.response.json().items[0].volumeInfo.publishedDate;",
+													"    let secondItemDate = pm.response.json().items[1].volumeInfo.publishedDate;",
+													"    tests[`orderBy = ${orderBy} Test With q=${q}`] = (orderBy == \"newest\")",
+													"        ?  isOrderedByNewest(firstItemDate, secondItemDate)",
+													"        : !isOrderedByNewest(firstItemDate, secondItemDate);",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes?q={{q}}&orderBy={{orderBy}}",
+											"host": [
+												"{{url}}volumes"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "{{q}}",
+													"description": "Full-text query string."
+												},
+												{
+													"key": "orderBy",
+													"value": "{{orderBy}}",
+													"description": "Order of the volume search results."
+												}
+											]
+										},
+										"description": "### orderBy newest CASE\n\n**Given**: a query and orderBy = newest\n\n**When**: sending url\n\n**Then**: The results should be ordered by date\n\n- - - - - - - - - - - - - - - - - -  -\n\n### orderBy relevance CASE\n\n**Given**: a query and orderBy = relevance\n\n**When**: sending url\n\n**Then**: The results should not be ordered by date\n\n- - - - - - - - - - - - - - - - - -  -\n\n### INCORRECT orderBy CASE\n\n**Given**: a query and an incorrect orderBy\n\n**When**: sending url\n\n**Then**: I should receive a status 400"
+									},
+									"response": []
+								}
+							],
+							"description": "# orderBy\n\n**Order of the volume search results.**\n\nBy default, a search request returns maxResults results, where maxResults is the parameter used in pagination, ordered by most relevant first.\nYou can change the ordering by setting the **orderBy** parameter to be one of these values:\n\n### **orderBy=relevance** \n\nReturns search results in order of the most relevant to least (this is the default).\n\n### **orderBy=newest**\n\nReturns search results in order of the newest published date to the oldest."
+						},
+						{
+							"name": "startindex",
+							"item": [
+								{
+									"name": "startIndex Parameter",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let url = pm.collectionVariables.get(\"url\");",
+													"let q = pm.iterationData.get(\"q\");",
+													"let startIndex = pm.iterationData.get(\"startIndex\");",
+													"let indexDelta = pm.iterationData.get(\"indexDelta\");",
+													"",
+													"if (!([undefined, 'word'].includes(startIndex))) {",
+													"    pm.test(`startIndex: delta ${indexDelta} starting at startIndex=${startIndex} Test With q=${q}`, function () {",
+													"            pm.sendRequest(`${url}volumes?q=${q}&startIndex=${indexDelta}`, (error, response) => {",
+													"                let firstItemId = pm.response.json().items[indexDelta].id;",
+													"                let secondItemId = response.json().items[startIndex].id;",
+													"                pm.expect(firstItemId).to.equal(secondItemId);",
+													"            });",
+													"        });",
+													"    };"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes?q={{q}}&startIndex={{startIndex}}",
+											"host": [
+												"{{url}}volumes"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "{{q}}",
+													"description": "Full-text query string."
+												},
+												{
+													"key": "startIndex",
+													"value": "{{startIndex}}",
+													"description": "Filter search results by volume type and availability."
+												}
+											]
+										},
+										"description": "### CORRECT startIndex CASE\n\n**Given**: a query with startIndex = 0\n\n**Given**: a query with startIndex = n\n\n**When**: sending the requests\n\n**Then**: the n-th result of the first request\n\n**And**: the first result of the second request should be the same\n\n- - - - - - - - - - - - - - - - - -  -\n\n### INCORRECT startIndex CASE\n\n**Given**: a query and an incorrect startIndex\n\n**When**: sending url\n\n**Then**: I should receive a status 400"
+									},
+									"response": []
+								}
+							],
+							"description": "# startIndex\n\n**The position in the collection at which to start the list of results.**\n\n\t\nFor any request for all items in a collection, you can paginate results by specifying startIndex and maxResults in the parameters for the request.\n\nThe index of the first item is 0."
+						}
+					],
+					"description": "# **Performing a Search**\n\nYou can perform a volumes search by sending an HTTP GET request to the following URI:\nhttps://www.googleapis.com/books/v1/volumes?q=search+terms\n\n| optional parameter | needed parameter |\n|:-|:-|\n| maxResults | q |\n| printType | \n| projection | \n| langRestrict | \n| filter | \n| download | \n| orderBy |\n| startIndex |",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Retrieving a Volume",
+					"item": [
+						{
+							"name": "projection",
+							"item": [
+								{
+									"name": "projection Parameter",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let volumeId = pm.iterationData.get(\"volumeId\");",
+													"let projection = pm.iterationData.get(\"projection\");",
+													"",
+													"if (projection != undefined)",
+													"    pm.test(`projection = ${projection} Test With volumeId=${volumeId}`, function () {",
+													"        if (['full', 'lite'].includes(projection))",
+													"            pm.expect(pm.response.json().volumeInfo.industryIdentifiers).",
+													"                to.be.a(projection == 'full'? \"array\" : \"undefined\");",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes/{{volumeId}}?projection={{projection}}",
+											"host": [
+												"{{url}}volumes"
+											],
+											"path": [
+												"{{volumeId}}"
+											],
+											"query": [
+												{
+													"key": "projection",
+													"value": "{{projection}}"
+												}
+											]
+										},
+										"description": "### CORRECT projection CASE\n\n**Given**: a request for a volume with a correct projection\n\n**When**: sending url\n\n**Then**: I should receive all or lite volume metadata about the volume\n\n- - - - - - - - - - - - - - - - - -  -\n\n### INCORRECT projection CASE\n\n**Given**: a request for a volume with a correct projection\n\n**When**: sending url\n\n**Then**: I should receive a status 400"
+									},
+									"response": []
+								}
+							],
+							"description": "# Projection\n\n**Restrict volume information returned to a subset of fields.**\n\nSupported projections are:\n\n**projection=full** - Includes all volume metadata (default).\n\n**projection=lite** - Includes only a subject of volume and access metadata."
+						},
+						{
+							"name": "VolumeId",
+							"item": [
+								{
+									"name": "volumeId Parameter",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let volumeId = pm.iterationData.get(\"volumeId\");",
+													"",
+													"let keys = [\"kind\", \"id\", \"etag\", \"selfLink\", \"volumeInfo\", \"saleInfo\", \"accessInfo\"];",
+													"let values = [\"string\", \"string\", \"string\", \"string\", \"object\", \"object\", \"object\"];",
+													"",
+													"let volumeProperties = {",
+													"    \"kind\": \"string\",",
+													"    \"id\": \"string\",",
+													"    \"etag\": \"string\",",
+													"    \"selfLink\": \"string\",",
+													"    \"volumeInfo\": {",
+													"        \"title\": \"string\",",
+													"        \"authors\": \"array\",",
+													"        \"publisher\": \"string\",",
+													"        \"publishedDate\": \"string\",",
+													"        \"description\": \"string\",",
+													"        \"industryIdentifiers\": \"array\",",
+													"        \"readingModes\": {",
+													"            \"text\": \"boolean\",",
+													"            \"image\": \"boolean\"",
+													"        },",
+													"        \"pageCount\": \"number\",",
+													"        \"printedPageCount\": \"number\",",
+													"        \"dimensions\": {",
+													"            \"height\": \"string\",",
+													"            \"width\": \"string\",",
+													"            \"thickness\": \"string\"",
+													"        },",
+													"        \"printType\": \"string\",",
+													"        \"categories\": \"array\",",
+													"        \"maturityRating\": \"string\",",
+													"        \"allowAnonLogging\": \"boolean\",",
+													"        \"contentVersion\": \"string\",",
+													"        \"panelizationSummary\": {",
+													"            \"containsEpubBubbles\": \"boolean\",",
+													"            \"containsImageBubbles\": \"boolean\"",
+													"        },",
+													"        \"imageLinks\": {",
+													"            \"smallThumbnail\": \"string\",",
+													"            \"thumbnail\": \"string\",",
+													"            \"small\": \"string\",",
+													"            \"medium\": \"string\",",
+													"            \"large\": \"string\",",
+													"            \"extraLarge\": \"string\"",
+													"        },",
+													"        \"language\": \"string\",",
+													"        \"previewLink\": \"string\",",
+													"        \"infoLink\": \"string\",",
+													"        \"canonicalVolumeLink\": \"string\"",
+													"    },",
+													"    \"saleInfo\": {",
+													"        \"country\": \"string\",",
+													"        \"saleability\": \"string\",",
+													"        \"isEbook\": \"boolean\"",
+													"    },",
+													"    \"accessInfo\": {",
+													"        \"country\": \"string\",",
+													"        \"viewability\": \"string\",",
+													"        \"embeddable\": \"boolean\",",
+													"        \"publicDomain\": \"boolean\",",
+													"        \"textToSpeechPermission\": \"string\",",
+													"        \"epub\": {",
+													"            \"isAvailable\": \"boolean\"",
+													"        },",
+													"        \"pdf\": {",
+													"            \"isAvailable\": \"boolean\"",
+													"        },",
+													"        \"webReaderLink\": \"string\",",
+													"        \"accessViewStatus\": \"string\",",
+													"        \"quoteSharingAllowed\": \"boolean\"",
+													"    }",
+													"};",
+													"",
+													"if (!([undefined, \"V714NghIxwo\", \"V714NghIxwos\"].includes(volumeId))) {",
+													"    let volume = pm.response.json();",
+													"    for (let i = 0; i < keys.length; i++) {",
+													"        let key = keys[i], value = values[i];",
+													"        pm.test(`Test of ${key} with volumeId = ${volumeId} value ${volume[key]}`, function() {",
+													"        pm.expect(volume[key]).to.be.a(value);})",
+													"    };",
+													"};"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes/{{volumeId}}",
+											"host": [
+												"{{url}}volumes"
+											],
+											"path": [
+												"{{volumeId}}"
+											]
+										},
+										"description": "# Correct Projection Case\n\n**Given**: a correct request to retrieve a book\n\n**When**: attempting to retrieve the volume\n\n**Then**: I should be returned all the data about the volume I need"
+									},
+									"response": []
+								},
+								{
+									"name": "Validity of Stored volumeId",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"let url = pm.collectionVariables.get(\"url\");",
+													"",
+													"pm.test(`Validity of volumeId`, function () {",
+													"    for (let i = 0; i < 5; i++) {",
+													"        const volumeId = pm.response.json().items[i].id;",
+													"        pm.sendRequest(url+'volumes/'+volumeId, (error, response) => {",
+													"            pm.expect(response).to.have.status(200);",
+													"        });",
+													"    };",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{url}}volumes?q={{q}}",
+											"host": [
+												"{{url}}volumes"
+											],
+											"query": [
+												{
+													"key": "q",
+													"value": "{{q}}",
+													"description": "This is a fake request"
+												}
+											]
+										},
+										"description": "### CORRECT projection CASE\n\n**Given**: 5 identifiers of volumes returned by a search\n\n**When**: attempting to retrieve the 5 volumes\n\n**Then**: the 5 requests should be OK"
+									},
+									"response": []
+								}
+							],
+							"description": "# VolumeId\n\n### Identifies a volume associated with the request.\n\n**Specifies the volume to add or remove from a bookshelf.**"
+						}
+					],
+					"description": "# Retrieving a specific volume\n\n### You can retrieve information for a specific volume by sending an HTTP GET request to the Volume resource URI:\n\n### https://www.googleapis.com/books/v1/volumes/volumeId\n\nReplace the volumeId path parameter with the ID of the volume to retrieve.\n\nSee the Google Books IDs section for more information on volume IDs.\n\n### Request\nHere is an example of a GET request that gets a single volume:\n\n\n### GET https://www.googleapis.com/books/v1/volumes/zyTCAlFPjgYC?key=yourAPIKey"
+				}
+			],
+			"description": "### Working with volumes\n \n2 endpoints :\n\n# Performing a search \n\nYou can perform a volumes search by sending an HTTP GET request to the following URI:\nhttps://www.googleapis.com/books/v1/volumes?q=search+terms\n\n# Retrieving a Volume\nYou can retrieve information for a specific volume by sending an HTTP GET request to the Volume resource URI:\nhttps://www.googleapis.com/books/v1/volumes/volumeId"
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "AIzaSyBWKCYNh3h1VJ26JA3NBIK7cksgO8vlt-w",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"let status=data.status;",
+					"",
+					"pm.test(\"Status code is \" + status , function () {",
+					"    pm.expect(pm.response.code).to.be.eql(parseInt(status));",
+					"});"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "https://www.googleapis.com/books/v1/"
+		}
+	]
+}
