@@ -6,8 +6,7 @@ Project of automated tests for the Google Books API for Search and Find Volume e
 
 ## Index
 
-* [Collection](https://github.com/RomainSeite/Project-Google-Books/blob/main/CollectionGoogleBookAPI.json)
-Collection : `https://www.getpostman.com/collections/970afb2833ffd5de12b0`
+* [Collection](https://github.com/RomainSeite/Project-Google-Books/blob/main/CollectionGoogleBookAPI.json) : `https://www.getpostman.com/collections/970afb2833ffd5de12b0`
 
 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
