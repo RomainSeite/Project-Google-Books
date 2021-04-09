@@ -9,9 +9,9 @@ Project of automated tests for the Google Books API for Search and Find Volume e
 ## Index
 
 * [**Collection**](https://github.com/RomainSeite/Project-Google-Books/blob/main/CollectionGoogleBookAPI.json) : [public link](https://www.getpostman.com/collections/970afb2833ffd5de12b0):`https://www.getpostman.com/collections/970afb2833ffd5de12b0`
- [export](https://github.com/RomainSeite/Project-Google-Books/blob/main/CollectionGoogleBookAPI.json): CollectionGoogleBookAPI.json
+ [export](https://github.com/RomainSeite/Project-Google-Books/blob/main/CollectionGoogleBookAPI.json): `CollectionGoogleBookAPI.json`
 
-`MindmapGoogleBookAPI.mm` : Mindmap using FreePlane
+* [Mindmap](https://github.com/RomainSeite/Project-Google-Books/blob/main/images/MindmapGoogleBookAPI.png) [`MindmapGoogleBookAPI.mm`](https://github.com/RomainSeite/Project-Google-Books/blob/main/MindmapGoogleBookAPI.mm) : Mindmap using FreePlane
 
 `ReportGoogleBookAPI.html`: htmlextra report
 
