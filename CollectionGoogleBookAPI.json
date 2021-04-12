@@ -28,9 +28,9 @@
 													"let maxResultsDiff = pm.iterationData.get(\"maxResultsDiff\");",
 													"",
 													"if (maxResults != undefined) {",
-													"    pm.test(`Status code is ${pm.response.code}, expected to be ${status}`, function () {",
-													"        pm.expect(pm.response.code).to.be.eql(400);",
-													"    });",
+													"    //pm.test(`Status code is ${pm.response.code}, expected to be ${status}`, function () {",
+													"    //    pm.expect(pm.response.code).to.be.eql(400);",
+													"    //});",
 													"    pm.test(`maxResults = ${maxResults} Test With q=${q}`, function () {",
 													"        if (maxResults <= 40 && maxResults > 0)",
 													"            maxResultsDiff == undefined",
@@ -918,7 +918,7 @@
 	],
 	"variable": [
 		{
-			"id": "49afe1c0-4930-4149-8ef6-86a6c24dc106",
+			"id": "ec9c6d61-de75-41cf-b0ae-f81a69fac3f1",
 			"key": "url",
 			"value": "https://www.googleapis.com/books/v1/"
 		}
