@@ -22,16 +22,25 @@
 											"listen": "test",
 											"script": {
 												"exec": [
+													"let status = data.status;",
 													"let q = pm.iterationData.get(\"q\");",
 													"let maxResults = parseInt(pm.iterationData.get(\"maxResults\"));",
 													"let maxResultsDiff = pm.iterationData.get(\"maxResultsDiff\");",
 													"",
-													"if (maxResults != undefined)",
+													"if (maxResults != undefined) {",
+													"    pm.test(`Status code is ${pm.response.code}, expected to be ${status}`, function () {",
+													"        pm.expect(pm.response.code).to.be.eql(400);",
+													"    });",
 													"    pm.test(`maxResults = ${maxResults} Test With q=${q}`, function () {",
 													"        if (maxResults <= 40 && maxResults > 0)",
 													"            maxResultsDiff == undefined",
 													"                ? pm.expect(pm.response.json().items.length).to.equal(maxResults)",
 													"                : pm.expect(pm.response.json().items.length).to.be.below(maxResults);",
+													"    });",
+													"}",
+													"else",
+													"    pm.test(`Status code is ${pm.response.code}, expected to be 400`, function () {",
+													"        pm.expect(pm.response.code).to.equal(400);",
 													"});"
 												],
 												"type": "text/javascript"
@@ -332,7 +341,7 @@
 							"name": "query q",
 							"item": [
 								{
-									"name": "q +%20-_\" Parameter",
+									"name": "q +%20-_\"{ Parameter",
 									"event": [
 										{
 											"listen": "test",
@@ -898,17 +907,18 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"let status=data.status;",
+					"/*let status=data.status;",
 					"",
 					"pm.test(`Status code is ${pm.response.code}, expected to be ${status}`, function () {",
 					"    pm.expect(pm.response.code).to.be.eql(parseInt(status));",
-					"});"
+					"});*/"
 				]
 			}
 		}
 	],
 	"variable": [
 		{
+			"id": "49afe1c0-4930-4149-8ef6-86a6c24dc106",
 			"key": "url",
 			"value": "https://www.googleapis.com/books/v1/"
 		}
